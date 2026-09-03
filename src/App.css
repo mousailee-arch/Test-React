@@ -1,0 +1,33 @@
+.app-shell {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: radial-gradient(circle at 20% 20%, #dcebd7, transparent 36%), #f1f4ed;
+}
+
+.app-shell > * {
+  max-width: 42rem;
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: #5b795f;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  color: #203c28;
+  font-size: clamp(3rem, 10vw, 7rem);
+  line-height: 0.95;
+}
+
+.intro {
+  margin: 1.5rem 0 0;
+  color: #536158;
+  font-size: 1.1rem;
+}
