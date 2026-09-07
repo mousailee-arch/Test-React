@@ -311,9 +311,9 @@ function App() {
   return (
     <div className={`site-shell ${isDark ? 'dark' : ''}`}>
       <header className="topbar">
-        <a className="brand" href="#top" aria-label="AI Study Lab 홈">
+        <a className="brand" href="#top" aria-label="MOUSAI 홈">
           <span className="brand-mark">AI</span>
-          <span>STUDY LAB</span>
+          <span>MOUSAI</span>
         </a>
         <button className="theme-toggle" type="button" onClick={() => setIsDark((current) => !current)}>
           <span aria-hidden="true">{isDark ? '☀' : '☾'}</span>
@@ -436,7 +436,7 @@ function App() {
         </section>
       </main>
 
-      <footer><span>AI STUDY LAB</span><span>작은 도구로 큰 아이디어를 시작하세요.</span></footer>
+      <footer><span>MOUSAI</span><span>작은 도구로 큰 아이디어를 시작하세요.</span></footer>
     </div>
   )
 }
