@@ -13,7 +13,7 @@
 .hero h1 { margin: 20px 0 0; color: #23432d; font-size: clamp(3.4rem, 7vw, 6.7rem); line-height: .91; letter-spacing: -.075em; }
 .dark .hero h1 { color: #d7e9d6; }
 .hero h1 em { color: #86a98b; font-style: normal; }
-.hero-copy { align-self: end; margin: 0 0 7px; color: #66736a; font-size: 1rem; line-height: 1.8; }
+.hero-copy { align-self: end; width: 100%; max-width: 34rem; margin: 0 0 7px; color: #66736a; font-size: 1rem; line-height: 1.8; overflow-wrap: break-word; }
 .dark .hero-copy, .dark .field-hint { color: #a8b8aa; }
 .generator, .result-panel { border-top: 1px solid #cbd4c8; padding-top: 31px; }
 .dark .generator, .dark .result-panel { border-color: #405044; }
@@ -97,4 +97,4 @@ textarea::placeholder { color: #9da89f; }
 footer { display: flex; justify-content: space-between; padding: 23px 0 30px; border-top: 1px solid #d8ded3; color: #87948a; font-size: .7rem; letter-spacing: .06em; }
 .dark footer { border-color: #344339; }
 @media (max-width: 900px) { .category-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 700px) { .topbar, .page-content, footer { width: min(100% - 32px, 560px); } .page-content { padding-top: 52px; } .hero { display: block; padding-bottom: 54px; } .hero-copy { margin-top: 29px; } .field-grid { grid-template-columns: 1fr; } .category-heading, .subcategory-heading { align-items: start; flex-direction: column; } .category-grid, .subcategory-groups { grid-template-columns: 1fr; } .section-heading, .result-heading { align-items: start; flex-direction: column; } footer { gap: 10px; flex-direction: column; } }
+@media (max-width: 700px) { .topbar, .page-content, footer { width: min(100% - 32px, 560px); } .page-content { padding-top: 52px; } .hero { display: block; padding-bottom: 54px; } .hero-copy { max-width: none; margin-top: 29px; } .hero-copy br { display: none; } .field-grid { grid-template-columns: 1fr; } .category-heading, .subcategory-heading { align-items: start; flex-direction: column; } .category-grid, .subcategory-groups { grid-template-columns: 1fr; } .section-heading, .result-heading { align-items: start; flex-direction: column; } footer { gap: 10px; flex-direction: column; } }
