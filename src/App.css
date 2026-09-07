@@ -13,7 +13,7 @@
 .hero h1 { margin: 20px 0 0; color: #23432d; font-size: clamp(3.4rem, 7vw, 6.7rem); line-height: .91; letter-spacing: -.075em; }
 .dark .hero h1 { color: #d7e9d6; }
 .hero h1 em { color: #86a98b; font-style: normal; }
-.hero-copy { align-self: end; width: 100%; max-width: 34rem; margin: 0 0 7px; color: #66736a; font-size: 1rem; line-height: 1.8; overflow-wrap: break-word; }
+.hero-copy { align-self: end; width: 100%; max-width: 34rem; margin: 0 0 7px; color: #66736a; font-size: 1rem; line-height: 1.8; overflow-wrap: anywhere; }
 .dark .hero-copy, .dark .field-hint { color: #a8b8aa; }
 .generator, .result-panel { border-top: 1px solid #cbd4c8; padding-top: 31px; }
 .dark .generator, .dark .result-panel { border-color: #405044; }
@@ -76,7 +76,7 @@ h3 { margin: 8px 0 0; color: #2a4432; font-size: 1.15rem; letter-spacing: -.03em
 .dark .field-topline { color: #d6e7d4; }
 .field-number { color: #78957d; font-size: .7rem; }
 .field-hint { min-height: 40px; margin-top: 9px; color: #768278; font-size: .78rem; line-height: 1.5; }
-textarea { width: 100%; min-height: 92px; resize: vertical; padding: 13px 0 0; border: 0; border-top: 1px solid #d0d9cd; outline: 0; color: #2b4132; background: transparent; font-size: .9rem; line-height: 1.6; }
+textarea { width: 100%; min-height: 92px; resize: vertical; padding: 13px 0 0; border: 0; border-top: 1px solid #d0d9cd; outline: 0; color: #2b4132; background: transparent; font-size: .9rem; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
 .dark textarea { border-color: #425344; color: #e1eee0; }
 textarea::placeholder { color: #9da89f; }
 .suggestion-area { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
