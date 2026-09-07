@@ -38,11 +38,38 @@ const categoryGuides: Record<Category, Record<PromptPart, string>> = {
   },
 }
 
+const categoryExamples: Record<Category, Record<PromptPart, string>> = {
+  marketing: {
+    persona: '예: B2B SaaS 고객 여정을 분석하고 전환 캠페인을 설계해 온 10년 경력의 콘텐츠 마케팅 전략가',
+    goal: '예: IT 의사결정자를 대상으로 3개월 안에 뉴스레터 가입 전환율을 20% 높이는 콘텐츠 전략 수립',
+    task: '예: 타깃 고객의 문제를 정의하고, 인지도부터 전환까지 이어지는 콘텐츠 주제 8개와 채널별 실행안을 제안',
+    context: '예: 월간 광고 예산은 500만 원이며, 브랜드는 전문적이지만 친근한 말투를 사용하고 주요 채널은 블로그와 LinkedIn임',
+  },
+  system: {
+    persona: '예: 대규모 트래픽 환경에서 장애 대응과 확장성 높은 구조를 설계해 온 15년 경력의 시스템 아키텍트',
+    goal: '예: 피크 시간대 동시 접속자 10만 명을 안정적으로 처리하면서 배포 중단 시간을 최소화하는 서비스 구조 설계',
+    task: '예: 컴포넌트 구성, 데이터 흐름, 장애 격리 전략과 모니터링 항목을 포함한 시스템 아키텍처와 도입 순서를 작성',
+    context: '예: 클라우드 환경은 AWS이고 개인정보를 다루며, 기존 모놀리식 서비스와의 단계적 전환 및 월 운영비 300만 원 제한이 있음',
+  },
+  programming: {
+    persona: '예: React와 TypeScript로 유지보수 가능한 웹 서비스를 구축하고 코드 리뷰를 해 온 10년 경력의 시니어 풀스택 개발자',
+    goal: '예: 사용자가 입력한 데이터를 안전하게 저장하고 실패 상황에서도 복구 가능한 업무 관리 기능 구현',
+    task: '예: 타입 정의부터 컴포넌트, API 연동, 유효성 검사, 예외 처리와 단위 테스트까지 실행 가능한 코드로 작성',
+    context: '예: React 19와 TypeScript를 사용하며 기존 Vite 프로젝트에 추가해야 하고, 외부 상태 관리 라이브러리 없이 구현해야 함',
+  },
+  design: {
+    persona: '예: 사용자 리서치와 접근성 기준을 바탕으로 복잡한 업무 도구를 설계해 온 10년 경력의 UX/UI 디자이너',
+    goal: '예: 처음 방문한 사용자도 3분 안에 핵심 기능을 이해하고 첫 작업을 완료할 수 있는 직관적인 경험 설계',
+    task: '예: 사용자 흐름, 정보 구조, 화면별 핵심 컴포넌트와 상태, 모바일 대응 원칙을 포함한 디자인 방향을 제안',
+    context: '예: 사용자는 디지털 도구에 익숙하지 않은 소상공인이며, 밝고 신뢰감 있는 브랜드 톤과 WCAG AA 접근성을 준수해야 함',
+  },
+}
+
 const personaSuggestions: Record<Category, string> = {
-  marketing: '타깃 고객과 시장을 분석하는 10년 경력의 마케팅 전략가',
-  system: '확장성과 안정성을 설계하는 시니어 시스템 아키텍트',
-  programming: '테스트와 유지보수까지 고려하는 시니어 풀스택 개발자',
-  design: '사용자 리서치부터 프로토타입까지 수행하는 UX/UI 디자이너',
+  marketing: 'B2B SaaS 고객 여정을 분석하고 전환 캠페인을 설계해 온 10년 경력의 콘텐츠 마케팅 전략가',
+  system: '대규모 트래픽 환경에서 장애 대응과 확장성 높은 구조를 설계해 온 15년 경력의 시스템 아키텍트',
+  programming: 'React와 TypeScript로 유지보수 가능한 웹 서비스를 구축하고 코드 리뷰를 해 온 10년 경력의 시니어 풀스택 개발자',
+  design: '사용자 리서치와 접근성 기준을 바탕으로 복잡한 업무 도구를 설계해 온 10년 경력의 UX/UI 디자이너',
 }
 
 const promptFields: Array<{
@@ -57,28 +84,28 @@ const promptFields: Array<{
     number: '01',
     title: '페르소나',
     hint: 'AI에게 어떤 전문가의 역할을 부여할까요?',
-    placeholder: '예: 10년 경력의 콘텐츠 전략가',
+    placeholder: '예: B2B SaaS 고객 여정을 분석하고 전환 캠페인을 설계해 온 10년 경력의 콘텐츠 마케팅 전략가',
   },
   {
     key: 'goal',
     number: '02',
     title: '목표',
     hint: '최종적으로 무엇을 달성하고 싶나요?',
-    placeholder: '예: 초보자도 이해하기 쉬운 블로그 글 작성',
+    placeholder: '예: IT 의사결정자를 대상으로 3개월 안에 뉴스레터 가입 전환율을 20% 높이는 콘텐츠 전략 수립',
   },
   {
     key: 'task',
     number: '03',
     title: '과제',
     hint: 'AI가 구체적으로 무엇을 해야 하나요?',
-    placeholder: '예: 핵심 내용을 5개의 소제목으로 나누어 작성',
+    placeholder: '예: 타깃 고객의 문제를 정의하고 인지도부터 전환까지 이어지는 콘텐츠 주제 8개와 채널별 실행안을 제안',
   },
   {
     key: 'context',
     number: '04',
     title: '맥락',
     hint: '배경정보, 조건, 제한사항을 알려주세요.',
-    placeholder: '예: 독자는 마케팅을 처음 접하는 직장인입니다.',
+    placeholder: '예: 월간 광고 예산은 500만 원이며 브랜드는 전문적이지만 친근한 말투를 사용하고 주요 채널은 블로그와 LinkedIn임',
   },
 ]
 
@@ -104,6 +131,11 @@ function App() {
   const getGuide = (part: PromptPart, fallback: string) => {
     if (!selectedCategories.length) return fallback
     return selectedCategories.map((category) => categoryGuides[category][part]).join(' ')
+  }
+
+  const getPlaceholder = (part: PromptPart, fallback: string) => {
+    if (!selectedCategories.length) return fallback
+    return selectedCategories.map((category) => categoryExamples[category][part]).join(' 또는 ')
   }
 
   const applyPersonaSuggestion = (category: Category) => {
@@ -185,7 +217,7 @@ function App() {
               <label className="prompt-field" htmlFor={key} key={key}>
                 <span className="field-topline"><span className="field-number">{number}</span><strong>{title}</strong></span>
                 <span className="field-hint">{getGuide(key, hint)}</span>
-                <textarea id={key} value={prompt[key]} onChange={(event) => updatePrompt(key, event.target.value)} placeholder={placeholder} rows={4} />
+                <textarea id={key} value={prompt[key]} onChange={(event) => updatePrompt(key, event.target.value)} placeholder={getPlaceholder(key, placeholder)} rows={4} />
                 {key === 'persona' && selectedCategories.length > 0 && (
                   <span className="suggestion-area">
                     <span className="suggestion-label">1차 제안</span>
