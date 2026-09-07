@@ -204,7 +204,7 @@ const emptyPrompt: Record<PromptPart, string> = {
   persona: '', goal: '', task: '', context: '', output: '', constraint: '', example: '',
 }
 
-const generatorName = '프롬프트 요소 설계기'
+const generatorName = 'Prompt Element Builder'
 
 function App() {
   const [prompt, setPrompt] = useState(emptyPrompt)
@@ -323,8 +323,8 @@ function App() {
 
       <main className="page-content" id="top">
         <section className="hero">
-          <p className="eyebrow">Prompt Elements Lab / 01</p>
-          <h1>프롬프트<br /><em>요소 설계기</em></h1>
+          <p className="eyebrow">Prompt Element Builder / 01</p>
+          <h1>Prompt Element<br /><em>Builder</em></h1>
           <p className="hero-copy">Persona, Goal, Task, Context, Output, Constraint, Example을 조합하여<br />아이디어를 바로 실행 가능한 프롬프트로 만들어보세요.</p>
         </section>
 
