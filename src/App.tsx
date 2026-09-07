@@ -325,7 +325,7 @@ function App() {
         <section className="hero">
           <p className="eyebrow">Prompt Element Builder / 01</p>
           <h1>Prompt Element<br /><em>Builder</em></h1>
-          <p className="hero-copy">Persona, Goal, Task, Context, Output, Constraint, Example을 조합하여<br />아이디어를 바로 실행 가능한 프롬프트로 만들어보세요.</p>
+          <p className="hero-copy">Persona(페르소나), Goal(목표), Task(과제), Context(맥락),<br />Output(출력 형식), Constraint(제약 조건), Example(예시)을 조합하여<br />아이디어를 바로 실행 가능한 프롬프트로 만들어보세요.</p>
         </section>
 
         <section className="generator" aria-label={`${generatorName} 입력 영역`}>
