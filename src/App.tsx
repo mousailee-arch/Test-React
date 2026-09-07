@@ -4,6 +4,37 @@ import './App.css'
 type PromptPart = 'persona' | 'goal' | 'task' | 'context' | 'output' | 'constraint' | 'example'
 type Category = 'marketing' | 'system' | 'programming' | 'design'
 
+const subcategories: Record<Category, Array<{ key: string; label: string }>> = {
+  marketing: [
+    { key: 'strategy', label: '마케팅 전략' },
+    { key: 'content', label: '콘텐츠 마케팅' },
+    { key: 'campaign', label: '광고·캠페인' },
+    { key: 'market-analysis', label: '고객·시장 분석' },
+    { key: 'brand', label: '브랜드 마케팅' },
+  ],
+  system: [
+    { key: 'ai-planning', label: 'AI 시스템 기획' },
+    { key: 'architecture', label: '시스템 아키텍처' },
+    { key: 'pipeline', label: '데이터·AI 파이프라인' },
+    { key: 'agent', label: 'AI Agent 시스템' },
+    { key: 'operations', label: '시스템 운영·최적화' },
+  ],
+  programming: [
+    { key: 'web', label: '웹 개발' },
+    { key: 'app', label: '앱 개발' },
+    { key: 'backend', label: '백엔드 개발' },
+    { key: 'ml', label: 'AI·ML 개발' },
+    { key: 'automation', label: '자동화·도구 개발' },
+  ],
+  design: [
+    { key: 'ui', label: 'UI 디자인' },
+    { key: 'ux', label: 'UX 디자인' },
+    { key: 'brand-design', label: '브랜드 디자인' },
+    { key: 'graphic', label: '그래픽·콘텐츠 디자인' },
+    { key: 'product', label: '제품·서비스 디자인' },
+  ],
+}
+
 const categories: Array<{ key: Category; label: string; description: string }> = [
   { key: 'marketing', label: '마케팅', description: '고객과 시장을 움직이는 콘텐츠' },
   { key: 'system', label: '시스템', description: '구조와 운영을 설계하는 문서' },
@@ -96,6 +127,21 @@ const personaSuggestions: Record<Category, string> = {
   design: '사용자 리서치와 접근성 기준을 바탕으로 복잡한 업무 도구를 설계해 온 10년 경력의 UX/UI 디자이너',
 }
 
+const subcategoryDescriptors: Record<Category, Record<string, string>> = {
+  marketing: {
+    strategy: '시장 기회와 성장 전략', content: '콘텐츠 기획과 배포', campaign: '광고 캠페인 성과 최적화', 'market-analysis': '고객 세그먼트와 시장 조사', brand: '브랜드 포지셔닝과 메시지',
+  },
+  system: {
+    'ai-planning': 'AI 시스템 요구사항과 로드맵', architecture: '확장 가능한 시스템 구조', pipeline: '데이터와 AI 모델 파이프라인', agent: '자율형 AI Agent 워크플로', operations: '시스템 안정성과 운영 자동화',
+  },
+  programming: {
+    web: '웹 프론트엔드와 사용자 기능', app: '모바일 앱 기능과 배포', backend: '서버 API와 데이터 처리', ml: '머신러닝 모델과 추론 기능', automation: '반복 업무 자동화와 개발 도구',
+  },
+  design: {
+    ui: '인터페이스 구성과 시각 계층', ux: '사용자 흐름과 사용성 개선', 'brand-design': '브랜드 아이덴티티와 시각 체계', graphic: '그래픽 에셋과 콘텐츠 제작', product: '제품 경험과 서비스 전체 흐름',
+  },
+}
+
 const promptFields: Array<{
   key: PromptPart
   number: string
@@ -158,9 +204,15 @@ const emptyPrompt: Record<PromptPart, string> = {
   persona: '', goal: '', task: '', context: '', output: '', constraint: '', example: '',
 }
 
+const generatorName = '프롬프트 요소 설계기'
+
 function App() {
   const [prompt, setPrompt] = useState(emptyPrompt)
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
+  const [selectedSubcategories, setSelectedSubcategories] = useState<Record<Category, string[]>>({
+    marketing: [], system: [], programming: [], design: [],
+  })
+  const [selectedParts, setSelectedParts] = useState<PromptPart[]>(promptFields.map(({ key }) => key))
   const [result, setResult] = useState('')
   const [isDark, setIsDark] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -170,14 +222,47 @@ function App() {
   }
 
   const toggleCategory = (category: Category) => {
-    setSelectedCategories((current) => current.includes(category)
-      ? current.filter((item) => item !== category)
-      : [...current, category])
+    setSelectedCategories((current) => {
+      const isSelected = current.includes(category)
+      if (isSelected) {
+        setSelectedSubcategories((subcategoriesByCategory) => ({ ...subcategoriesByCategory, [category]: [] }))
+        return current.filter((item) => item !== category)
+      }
+      return [...current, category]
+    })
+  }
+
+  const toggleSubcategory = (category: Category, subcategory: string) => {
+    setSelectedSubcategories((current) => ({
+      ...current,
+      [category]: current[category].includes(subcategory)
+        ? current[category].filter((item) => item !== subcategory)
+        : [...current[category], subcategory],
+    }))
+  }
+
+  const togglePromptPart = (part: PromptPart) => {
+    setSelectedParts((current) => current.includes(part)
+      ? current.filter((item) => item !== part)
+      : [...current, part])
+  }
+
+  const getSelectedSubcategoryLabels = (category: Category) => (
+    selectedSubcategories[category].map((key) => subcategories[category].find((item) => item.key === key)?.label ?? key)
+  )
+
+  const getSelectedFocus = () => selectedCategories.flatMap((category) => (
+    selectedSubcategories[category].map((key) => subcategoryDescriptors[category][key])
+  ))
+
+  const getFocusText = () => {
+    const focus = getSelectedFocus()
+    return focus.length ? ` 선택한 세부 분야(${focus.join(', ')})에 초점을 맞춰 안내하세요.` : ''
   }
 
   const getGuide = (part: PromptPart, fallback: string) => {
     if (!selectedCategories.length) return fallback
-    return selectedCategories.map((category) => categoryGuides[category][part]).join(' ')
+    return selectedCategories.map((category) => categoryGuides[category][part]).join(' ') + getFocusText()
   }
 
   const getPlaceholder = (part: PromptPart, fallback: string) => {
@@ -186,13 +271,22 @@ function App() {
   }
 
   const applyPersonaSuggestion = (category: Category) => {
-    updatePrompt('persona', personaSuggestions[category])
+    const focus = getSelectedSubcategoryLabels(category)
+    const focusText = focus.length ? `${focus.join(', ')} 분야에 특히 전문성을 가진 ` : ''
+    updatePrompt('persona', `${focusText}${personaSuggestions[category]}`)
   }
 
   const generatePrompt = () => {
-    const sections = promptFields
+    const focus = selectedCategories.flatMap((category) => {
+      const categoryLabel = categories.find((item) => item.key === category)?.label ?? category
+      const subcategoryLabels = getSelectedSubcategoryLabels(category)
+      return subcategoryLabels.length ? `${categoryLabel}: ${subcategoryLabels.join(', ')}` : categoryLabel
+    })
+    const categorySection = focus.length ? `분야 및 세부 분야:\n${focus.join('\n')}` : ''
+    const sections = [categorySection, ...promptFields
+      .filter(({ key }) => selectedParts.includes(key))
       .map(({ key, title }) => prompt[key].trim() ? `${title}:\n${prompt[key].trim()}` : '')
-      .filter(Boolean)
+      .filter(Boolean)]
 
     setResult(sections.join('\n\n'))
     setCopied(false)
@@ -200,6 +294,9 @@ function App() {
 
   const resetPrompt = () => {
     setPrompt(emptyPrompt)
+    setSelectedCategories([])
+    setSelectedSubcategories({ marketing: [], system: [], programming: [], design: [] })
+    setSelectedParts(promptFields.map(({ key }) => key))
     setResult('')
     setCopied(false)
   }
@@ -226,18 +323,18 @@ function App() {
 
       <main className="page-content" id="top">
         <section className="hero">
-          <p className="eyebrow">Prompt workshop / 01</p>
-          <h1>PGTC<br /><em>프롬프트 생성기</em></h1>
+          <p className="eyebrow">Prompt Elements Lab / 01</p>
+          <h1>프롬프트<br /><em>요소 설계기</em></h1>
           <p className="hero-copy">Persona, Goal, Task, Context, Output, Constraint, Example을 조합하여<br />아이디어를 바로 실행 가능한 프롬프트로 만들어보세요.</p>
         </section>
 
-        <section className="generator" aria-label="프롬프트 입력 영역">
+        <section className="generator" aria-label={`${generatorName} 입력 영역`}>
           <div className="section-heading">
             <div>
               <span className="section-label">BUILD YOUR PROMPT</span>
-              <h2>일곱 가지 재료를 입력하세요.</h2>
+              <h2>필요한 요소 범위를 선택하세요.</h2>
             </div>
-            <span className="step-count">{Object.values(prompt).filter(Boolean).length} / 7 완료</span>
+            <span className="step-count">{selectedParts.filter((part) => prompt[part].trim()).length} / {selectedParts.length} 완료</span>
           </div>
 
           <div className="category-picker">
@@ -257,10 +354,51 @@ function App() {
                 </label>
               ))}
             </div>
+            {selectedCategories.length > 0 && (
+              <>
+              <div className="subcategory-picker">
+                <div className="subcategory-heading">
+                  <span className="section-label">SELECT A SPECIALTY</span>
+                  <span className="category-note">2차 세부 분야 · 복수 선택 가능</span>
+                </div>
+                <div className="subcategory-groups">
+                  {selectedCategories.map((category) => (
+                    <div className="subcategory-group" key={category}>
+                      <strong>{categories.find((item) => item.key === category)?.label}</strong>
+                      <div className="subcategory-list">
+                        {subcategories[category].map(({ key, label }) => (
+                          <label className={`subcategory-option ${selectedSubcategories[category].includes(key) ? 'selected' : ''}`} key={key}>
+                            <input type="checkbox" checked={selectedSubcategories[category].includes(key)} onChange={() => toggleSubcategory(category, key)} />
+                            <span className="sub-checkmark" aria-hidden="true">✓</span>
+                            <span>{label}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="element-picker">
+                <div className="subcategory-heading">
+                  <span className="section-label">CHOOSE ELEMENTS</span>
+                  <span className="category-note">입력·생성할 요소 범위</span>
+                </div>
+                <div className="element-list">
+                  {promptFields.map(({ key, number, title }) => (
+                    <label className={`element-option ${selectedParts.includes(key) ? 'selected' : ''}`} key={key}>
+                      <input type="checkbox" checked={selectedParts.includes(key)} onChange={() => togglePromptPart(key)} />
+                      <span className="sub-checkmark" aria-hidden="true">✓</span>
+                      <span><small>{number}</small>{title}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              </>
+            )}
           </div>
 
           <div className="field-grid">
-            {promptFields.map(({ key, number, title, hint, placeholder }) => (
+            {promptFields.filter(({ key }) => selectedParts.includes(key)).map(({ key, number, title, hint, placeholder }) => (
               <label className="prompt-field" htmlFor={key} key={key}>
                 <span className="field-topline"><span className="field-number">{number}</span><strong>{title}</strong></span>
                 <span className="field-hint">{getGuide(key, hint)}</span>

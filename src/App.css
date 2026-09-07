@@ -40,6 +40,33 @@ h3 { margin: 8px 0 0; color: #2a4432; font-size: 1.15rem; letter-spacing: -.03em
 .category-option strong { color: #2f5139; font-size: .84rem; }
 .dark .category-option strong { color: #d6e7d4; }
 .category-option small { margin-top: 7px; color: #7b897e; font-size: .7rem; line-height: 1.4; }
+.subcategory-picker { margin-top: 24px; padding-top: 22px; border-top: 1px solid #d1dbcf; }
+.dark .subcategory-picker { border-color: #46584a; }
+.subcategory-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.subcategory-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 16px; }
+.subcategory-group { padding: 15px; border: 1px solid #d1dbcf; background: #f7f9f5; }
+.dark .subcategory-group { border-color: #46584a; background: #29372e; }
+.subcategory-group > strong { color: #426349; font-size: .78rem; }
+.dark .subcategory-group > strong { color: #d6e7d4; }
+.subcategory-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+.subcategory-option { display: inline-flex; align-items: center; gap: 6px; padding: 7px 9px; border: 1px solid #d1dbcf; color: #637267; background: transparent; cursor: pointer; font-size: .72rem; transition: border-color .2s, background .2s, color .2s; }
+.dark .subcategory-option { border-color: #526355; color: #b8c7b9; }
+.subcategory-option:hover { border-color: #78997d; }
+.subcategory-option.selected { border-color: #527c5d; color: #315a3d; background: #e0ebdf; }
+.dark .subcategory-option.selected { color: #e4f0e3; background: #334b39; }
+.subcategory-option input { position: absolute; opacity: 0; pointer-events: none; }
+.sub-checkmark { color: transparent; font-size: .65rem; }
+.subcategory-option.selected .sub-checkmark { color: #527c5d; }
+.element-picker { margin-top: 22px; padding-top: 22px; border-top: 1px solid #d1dbcf; }
+.dark .element-picker { border-color: #46584a; }
+.element-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.element-option { display: inline-flex; align-items: center; gap: 8px; padding: 9px 11px; border: 1px solid #c5d1c5; color: #637267; background: #f7f9f5; cursor: pointer; font-size: .78rem; transition: border-color .2s, background .2s, color .2s; }
+.dark .element-option { border-color: #526355; color: #b8c7b9; background: #29372e; }
+.element-option:hover { border-color: #78997d; }
+.element-option.selected { border-color: #527c5d; color: #315a3d; background: #e0ebdf; }
+.dark .element-option.selected { color: #e4f0e3; background: #334b39; }
+.element-option input { position: absolute; opacity: 0; pointer-events: none; }
+.element-option small { margin-right: 3px; color: #78957d; font-size: .65rem; }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 34px; }
 .prompt-field { display: flex; flex-direction: column; padding: 22px; background: #e9eee6; border: 1px solid transparent; border-radius: 4px; transition: border-color .2s, background .2s; }
 .dark .prompt-field { background: #243128; }
@@ -70,4 +97,4 @@ textarea::placeholder { color: #9da89f; }
 footer { display: flex; justify-content: space-between; padding: 23px 0 30px; border-top: 1px solid #d8ded3; color: #87948a; font-size: .7rem; letter-spacing: .06em; }
 .dark footer { border-color: #344339; }
 @media (max-width: 900px) { .category-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 700px) { .topbar, .page-content, footer { width: min(100% - 32px, 560px); } .page-content { padding-top: 52px; } .hero { display: block; padding-bottom: 54px; } .hero-copy { margin-top: 29px; } .field-grid { grid-template-columns: 1fr; } .category-heading { align-items: start; flex-direction: column; } .category-grid { grid-template-columns: 1fr; } .section-heading, .result-heading { align-items: start; flex-direction: column; } footer { gap: 10px; flex-direction: column; } }
+@media (max-width: 700px) { .topbar, .page-content, footer { width: min(100% - 32px, 560px); } .page-content { padding-top: 52px; } .hero { display: block; padding-bottom: 54px; } .hero-copy { margin-top: 29px; } .field-grid { grid-template-columns: 1fr; } .category-heading, .subcategory-heading { align-items: start; flex-direction: column; } .category-grid, .subcategory-groups { grid-template-columns: 1fr; } .section-heading, .result-heading { align-items: start; flex-direction: column; } footer { gap: 10px; flex-direction: column; } }
