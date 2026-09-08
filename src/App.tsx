@@ -4,34 +4,54 @@ import './App.css'
 type PromptPart = 'persona' | 'goal' | 'task' | 'context' | 'output' | 'constraint' | 'example'
 type Category = 'marketing' | 'system' | 'programming' | 'design'
 
-const subcategories: Record<Category, Array<{ key: string; label: string }>> = {
+const subcategories: Record<Category, Array<{ key: string; label: string; description: string }>> = {
   marketing: [
-    { key: 'strategy', label: '마케팅 전략' },
-    { key: 'content', label: '콘텐츠 마케팅' },
-    { key: 'campaign', label: '광고·캠페인' },
-    { key: 'market-analysis', label: '고객·시장 분석' },
-    { key: 'brand', label: '브랜드 마케팅' },
+    { key: 'strategy', label: '마케팅 전략', description: '시장 기회와 성장 방향을 설계' },
+    { key: 'content', label: '콘텐츠 마케팅', description: '고객 여정별 콘텐츠를 기획·배포' },
+    { key: 'campaign', label: '광고·캠페인', description: '광고 성과와 전환을 최적화' },
+    { key: 'market-analysis', label: '고객·시장 분석', description: '고객 세그먼트와 시장 흐름을 분석' },
+    { key: 'brand', label: '브랜드 마케팅', description: '브랜드 포지셔닝과 메시지를 구축' },
+    { key: 'seo', label: 'SEO·검색 마케팅', description: '검색 노출과 유입 경로를 개선' },
+    { key: 'crm', label: 'CRM·리텐션', description: '고객 관계와 재방문을 관리' },
+    { key: 'social', label: '소셜 미디어 마케팅', description: '소셜 채널 콘텐츠와 커뮤니티를 운영' },
+    { key: 'email', label: '이메일 마케팅', description: '뉴스레터와 자동화 메시지를 설계' },
+    { key: 'performance', label: '퍼포먼스 마케팅', description: '데이터 기반 매체 운영과 성과를 관리' },
   ],
   system: [
-    { key: 'ai-planning', label: 'AI 시스템 기획' },
-    { key: 'architecture', label: '시스템 아키텍처' },
-    { key: 'pipeline', label: '데이터·AI 파이프라인' },
-    { key: 'agent', label: 'AI Agent 시스템' },
-    { key: 'operations', label: '시스템 운영·최적화' },
+    { key: 'ai-planning', label: 'AI 시스템 기획', description: 'AI 서비스 요구사항과 로드맵을 정의' },
+    { key: 'architecture', label: '시스템 아키텍처', description: '확장성과 안정성을 갖춘 구조를 설계' },
+    { key: 'pipeline', label: '데이터·AI 파이프라인', description: '데이터 수집부터 모델 제공까지 연결' },
+    { key: 'agent', label: 'AI Agent 시스템', description: '도구를 사용하는 Agent 흐름을 설계' },
+    { key: 'operations', label: '시스템 운영·최적화', description: '모니터링과 비용·성능을 개선' },
+    { key: 'cloud', label: '클라우드 인프라', description: '클라우드 리소스와 배포 환경을 구성' },
+    { key: 'data-platform', label: '데이터 플랫폼', description: '조직의 데이터 저장·활용 기반을 구축' },
+    { key: 'security', label: '보안·거버넌스', description: '접근 제어와 정책·감사 체계를 수립' },
+    { key: 'integration', label: '시스템 통합', description: '서비스 간 API와 업무 흐름을 연결' },
+    { key: 'observability', label: '모니터링·관측성', description: '로그·메트릭·트레이스로 상태를 파악' },
   ],
   programming: [
-    { key: 'web', label: '웹 개발' },
-    { key: 'app', label: '앱 개발' },
-    { key: 'backend', label: '백엔드 개발' },
-    { key: 'ml', label: 'AI·ML 개발' },
-    { key: 'automation', label: '자동화·도구 개발' },
+    { key: 'web', label: '웹 개발', description: '브라우저 기반 서비스와 인터페이스를 구현' },
+    { key: 'app', label: '앱 개발', description: 'iOS·Android 모바일 경험을 개발' },
+    { key: 'backend', label: '백엔드 개발', description: 'API·서버·데이터 처리 로직을 구현' },
+    { key: 'ml', label: 'AI·ML 개발', description: '모델 학습·평가·추론 기능을 개발' },
+    { key: 'automation', label: '자동화·도구 개발', description: '반복 업무와 개발 흐름을 자동화' },
+    { key: 'frontend', label: '프론트엔드 개발', description: '컴포넌트와 상태 기반 화면을 구축' },
+    { key: 'database', label: '데이터베이스 개발', description: '데이터 모델과 쿼리 성능을 설계' },
+    { key: 'devops', label: 'DevOps·CI/CD', description: '빌드·테스트·배포 파이프라인을 운영' },
+    { key: 'testing', label: '테스트·품질 관리', description: '자동화 테스트와 코드 품질을 개선' },
+    { key: 'security-dev', label: '보안 개발', description: '취약점을 예방하는 안전한 코드를 작성' },
   ],
   design: [
-    { key: 'ui', label: 'UI 디자인' },
-    { key: 'ux', label: 'UX 디자인' },
-    { key: 'brand-design', label: '브랜드 디자인' },
-    { key: 'graphic', label: '그래픽·콘텐츠 디자인' },
-    { key: 'product', label: '제품·서비스 디자인' },
+    { key: 'ui', label: 'UI 디자인', description: '화면 구성과 시각 계층을 설계' },
+    { key: 'ux', label: 'UX 디자인', description: '사용자 흐름과 사용성을 개선' },
+    { key: 'brand-design', label: '브랜드 디자인', description: '브랜드 아이덴티티와 시각 체계를 구축' },
+    { key: 'graphic', label: '그래픽·콘텐츠 디자인', description: '이미지·일러스트·콘텐츠를 제작' },
+    { key: 'product', label: '제품·서비스 디자인', description: '제품 전체 경험과 기능을 설계' },
+    { key: 'design-system', label: '디자인 시스템', description: '재사용 가능한 UI 규칙과 토큰을 정의' },
+    { key: 'motion', label: '모션·인터랙션 디자인', description: '움직임과 상호작용 피드백을 설계' },
+    { key: 'research', label: '사용자 리서치', description: '사용자 행동과 요구를 조사·검증' },
+    { key: 'service', label: '서비스 디자인', description: '고객 접점과 운영 프로세스를 설계' },
+    { key: 'content-design', label: '콘텐츠 디자인', description: '정보 구조와 UX 라이팅을 설계' },
   ],
 }
 
@@ -129,16 +149,16 @@ const personaSuggestions: Record<Category, string> = {
 
 const subcategoryDescriptors: Record<Category, Record<string, string>> = {
   marketing: {
-    strategy: '시장 기회와 성장 전략', content: '콘텐츠 기획과 배포', campaign: '광고 캠페인 성과 최적화', 'market-analysis': '고객 세그먼트와 시장 조사', brand: '브랜드 포지셔닝과 메시지',
+    strategy: '시장 기회와 성장 전략', content: '콘텐츠 기획과 배포', campaign: '광고 캠페인 성과 최적화', 'market-analysis': '고객 세그먼트와 시장 조사', brand: '브랜드 포지셔닝과 메시지', seo: 'SEO와 검색 유입 최적화', crm: '고객 관계와 재구매 관리', social: '소셜 채널과 커뮤니티 운영', email: '이메일 캠페인과 자동화', performance: '데이터 기반 광고 성과 관리',
   },
   system: {
-    'ai-planning': 'AI 시스템 요구사항과 로드맵', architecture: '확장 가능한 시스템 구조', pipeline: '데이터와 AI 모델 파이프라인', agent: '자율형 AI Agent 워크플로', operations: '시스템 안정성과 운영 자동화',
+    'ai-planning': 'AI 시스템 요구사항과 로드맵', architecture: '확장 가능한 시스템 구조', pipeline: '데이터와 AI 모델 파이프라인', agent: '자율형 AI Agent 워크플로', operations: '시스템 안정성과 운영 자동화', cloud: '클라우드 인프라와 배포 환경', 'data-platform': '조직 데이터 플랫폼과 활용 기반', security: '보안 정책과 시스템 거버넌스', integration: '서비스 API와 시스템 통합', observability: '로그·메트릭·트레이스 기반 관측성',
   },
   programming: {
-    web: '웹 프론트엔드와 사용자 기능', app: '모바일 앱 기능과 배포', backend: '서버 API와 데이터 처리', ml: '머신러닝 모델과 추론 기능', automation: '반복 업무 자동화와 개발 도구',
+    web: '웹 프론트엔드와 사용자 기능', app: '모바일 앱 기능과 배포', backend: '서버 API와 데이터 처리', ml: '머신러닝 모델과 추론 기능', automation: '반복 업무 자동화와 개발 도구', frontend: '컴포넌트와 상태 기반 화면', database: '데이터 모델과 쿼리 성능', devops: '빌드·테스트·배포 자동화', testing: '자동화 테스트와 코드 품질', 'security-dev': '취약점 예방과 보안 코드',
   },
   design: {
-    ui: '인터페이스 구성과 시각 계층', ux: '사용자 흐름과 사용성 개선', 'brand-design': '브랜드 아이덴티티와 시각 체계', graphic: '그래픽 에셋과 콘텐츠 제작', product: '제품 경험과 서비스 전체 흐름',
+    ui: '인터페이스 구성과 시각 계층', ux: '사용자 흐름과 사용성 개선', 'brand-design': '브랜드 아이덴티티와 시각 체계', graphic: '그래픽 에셋과 콘텐츠 제작', product: '제품 경험과 서비스 전체 흐름', 'design-system': '재사용 가능한 UI 규칙과 토큰', motion: '모션과 인터랙션 피드백', research: '사용자 행동과 요구 검증', service: '고객 접점과 운영 프로세스', 'content-design': '정보 구조와 UX 라이팅',
   },
 }
 
@@ -366,11 +386,11 @@ function App() {
                     <div className="subcategory-group" key={category}>
                       <strong>{categories.find((item) => item.key === category)?.label}</strong>
                       <div className="subcategory-list">
-                        {subcategories[category].map(({ key, label }) => (
+                        {subcategories[category].map(({ key, label, description }) => (
                           <label className={`subcategory-option ${selectedSubcategories[category].includes(key) ? 'selected' : ''}`} key={key}>
                             <input type="checkbox" checked={selectedSubcategories[category].includes(key)} onChange={() => toggleSubcategory(category, key)} />
                             <span className="sub-checkmark" aria-hidden="true">✓</span>
-                            <span>{label}</span>
+                            <span><strong>{label}</strong><small>{description}</small></span>
                           </label>
                         ))}
                       </div>
